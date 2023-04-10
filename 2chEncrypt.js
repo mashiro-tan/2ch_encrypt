@@ -150,15 +150,23 @@ mainBody.appendChild(windowSelf);
 
 draggable_qr("crypt-window", "center");
 
-const formatterElement = $(".postform__raw .postform__mu-wrapper");
+const formatterElements = document.querySelectorAll(
+  ".postform__raw .postform__mu-wrapper"
+);
 
 const modalCaller = document.createElement("button");
 
 modalCaller.classList.add("postform__mu");
 modalCaller.innerHTML = "🔐";
-modalCaller.onclick = (e) => {
-  e.preventDefault();
-  triggerWindow(false);
-};
+modalCaller.type = "button";
 
-formatterElement.append(modalCaller);
+formatterElements.forEach((el) => {
+  const clonedButton = modalCaller.cloneNode(true);
+  clonedButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    triggerWindow(false);
+    return false;
+  });
+
+  el.appendChild(clonedButton);
+});
